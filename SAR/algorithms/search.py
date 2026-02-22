@@ -28,41 +28,25 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-    start = problem.getStartState()
-    # Si ya es el goal, devuelvo vacío.
-    if problem.isGoalState(start):
-        return []
+    # Initialize the stack with the start state and empty path
+    start_state = problem.getStartState()
+    stack = [(start_state, [])]  # (state, path)
+    visited = set([start_state])
     
-    # Creo una pila.
-    stack = []
-    stack.append((start, []))
-    # Un set para los que ya visité, para no repetir.
-    visited = set()
-    visited.add(start)
-    
-    # Un loop mientras haya cosas en la pila.
-    while len(stack) > 0:
-        # Saco el último de la pila. 
-        current, path = stack.pop()
+    while stack:
+        current_state, path = stack.pop()
         
-        # Chequeo si este es el goal.
-        if problem.isGoalState(current):
+        if problem.isGoalState(current_state):
             return path
         
-        # Si no, veo los siguientes estados.
-        successors = problem.getSuccessors(current)
-        # Recorro cada successor. Uso un for con índice porque no sé hacerlo mejor.
-        for i in range(len(successors)):
-            next_state = successors[i][0]
-            action = successors[i][1]
-            cost = successors[i][2]  
-            # Si no lo he visitado, lo agrego.
-            if next_state not in visited:
-                visited.add(next_state)
+        # Get successors
+        for successor, action, cost in problem.getSuccessors(current_state):
+            if successor not in visited:
+                visited.add(successor)
                 new_path = path + [action]
-                stack.append((next_state, new_path))
+                stack.append((successor, new_path))
     
-    # Si no encontré nada, devuelvo vacío.
+    # If no solution found
     return []
 
 
