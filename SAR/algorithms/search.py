@@ -28,25 +28,34 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-    # Initialize the stack with the start state and empty path
-    start_state = problem.getStartState()
-    stack = [(start_state, [])]  # (state, path)
-    visited = set([start_state])
+    start = problem.getStartState()
+    # Si ya es el goal, devuelvo vacío.
+    if problem.isGoalState(start):
+        return []
     
+    # Creo una pila con el start y su camino vacío.
+    stack = [(start, [])]
+    # Un set para los visitados, para no repetir.
+    visited = set([start])
+    
+    # Ahora, un loop mientras la pila no esté vacía.
     while stack:
-        current_state, path = stack.pop()
+        # Saco el último de la pila.
+        current, path = stack.pop()
         
-        if problem.isGoalState(current_state):
+        # Chequeo si current es goal.
+        if problem.isGoalState(current):
             return path
         
-        # Get successors
-        for successor, action, cost in problem.getSuccessors(current_state):
-            if successor not in visited:
-                visited.add(successor)
+        # Si no, veo los siguientes estados.
+        for next_state, action, cost in problem.getSuccessors(current):
+            # Si no lo he visitado, lo agrego a la pila con el nuevo camino.
+            if next_state not in visited:
+                visited.add(next_state)
                 new_path = path + [action]
-                stack.append((successor, new_path))
+                stack.append((next_state, new_path))
     
-    # If no solution found
+    # Si salgo del loop sin encontrar, no hay solución.
     return []
 
 
