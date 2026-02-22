@@ -18,29 +18,10 @@ def manhattanHeuristic(state, problem):
     For SimpleSurvivorProblem: calculates |dx| + |dy| between current position and goal
     For MultiSurvivorProblem: calculates distance to nearest remaining survivor
     """
-    # Handle different state formats
-    if isinstance(state, tuple) and len(state) == 2 and isinstance(state[0], tuple):
-        # MultiSurvivorProblem: state = (position, survivors_grid)
-        position = state[0]
-        survivors_grid = state[1]   
-
-        # Find nearest survivor
-        min_distance = float('inf')
-        for x in range(survivors_grid.width):
-            for y in range(survivors_grid.height):
-                if survivors_grid[x][y]:  # Survivor present
-                    distance = abs(position[0] - x) + abs(position[1] - y)
-                    min_distance = min(min_distance, distance)
-
-        return min_distance if min_distance != float('inf') else 0
-
-    else:
-        # SimpleSurvivorProblem: state = (x, y) position
-        current_x, current_y = state
-        goal_x, goal_y = problem.goal
-
-        # Manhattan distance: |dx| + |dy|
-        return abs(current_x - goal_x) + abs(current_y - goal_y)
+    x1, y1 = state
+    x2, y2 = problem.goal
+    
+    return abs(x1 - x2) + abs(y1 - y2)    
 
 
 def euclideanHeuristic(state, problem):
