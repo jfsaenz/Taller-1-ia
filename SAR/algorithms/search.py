@@ -54,8 +54,63 @@ def breadthFirstSearch(problem: SearchProblem):
     """
     Search the shallowest nodes in the search tree first.
     """
+    # Código Original Hecho a mano, sin IA:
+    """
+    frontier = utils.Queue()
+    start = problem.getStartState()
+
+    frontier.push((start, []))
+    visited = set([start])
+
+    while not frontier.isEmpty():
+        state, path = frontier.pop()
+
+        if problem.isGoalState(state):
+            return path
+
+        for succ, action, stepCost in problem.getSuccessors(state):
+            if succ not in visited:
+                visited.add(succ)
+                frontier.push((succ, path + [action]))
+
+    return []
+    """
+    #PROMPT: Revisa la carpeta que tiene todo el código, con eso, revisa el código que hice para BFS, 
+    #Corrigelo en caso de ser necesario para que cumpla con lo que me piden en el documento.
+    #El código que hice fue este: (Código Original Hecho a mano, sin IA)
+    
+    #Código corregido por IA (ChatGPT 5.2 versión Plus):
     # TODO: Add your code here
-    utils.raiseNotDefined()
+    start = problem.getStartState()
+    if problem.isGoalState(start):
+        return []
+
+    frontier = utils.Queue()
+    frontier.push(start)
+
+    visited = set([start])
+    parent = {}  
+
+    while not frontier.isEmpty():
+        state = frontier.pop()
+
+        if problem.isGoalState(state):
+            actions = []
+            cur = state
+            while cur != start:
+                prev, act = parent[cur]
+                actions.append(act)
+                cur = prev
+            actions.reverse()
+            return actions
+
+        for succ, action, stepCost in problem.getSuccessors(state):
+            if succ not in visited:
+                visited.add(succ)
+                parent[succ] = (state, action)
+                frontier.push(succ)
+
+    return []
 
 
 def uniformCostSearch(problem: SearchProblem):
