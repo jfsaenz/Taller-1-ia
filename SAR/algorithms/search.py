@@ -33,29 +33,36 @@ def depthFirstSearch(problem: SearchProblem):
     if problem.isGoalState(start):
         return []
     
-    # Creo una pila con el start y su camino vacío.
-    stack = [(start, [])]
-    # Un set para los visitados, para no repetir.
-    visited = set([start])
+    # Creo una pila.
+    stack = []
+    stack.append((start, []))
+    # Un set para los que ya visité, para no repetir.
+    visited = set()
+    visited.add(start)
     
-    # Ahora, un loop mientras la pila no esté vacía.
-    while stack:
-        # Saco el último de la pila.
+    # Un loop mientras haya cosas en la pila.
+    while len(stack) > 0:
+        # Saco el último de la pila. 
         current, path = stack.pop()
         
-        # Chequeo si current es goal.
+        # Chequeo si este es el goal.
         if problem.isGoalState(current):
             return path
         
         # Si no, veo los siguientes estados.
-        for next_state, action, cost in problem.getSuccessors(current):
-            # Si no lo he visitado, lo agrego a la pila con el nuevo camino.
+        successors = problem.getSuccessors(current)
+        # Recorro cada successor. Uso un for con índice porque no sé hacerlo mejor.
+        for i in range(len(successors)):
+            next_state = successors[i][0]
+            action = successors[i][1]
+            cost = successors[i][2]  
+            # Si no lo he visitado, lo agrego.
             if next_state not in visited:
                 visited.add(next_state)
                 new_path = path + [action]
                 stack.append((next_state, new_path))
     
-    # Si salgo del loop sin encontrar, no hay solución.
+    # Si no encontré nada, devuelvo vacío.
     return []
 
 
