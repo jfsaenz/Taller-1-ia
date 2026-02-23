@@ -28,6 +28,9 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
+     #PROMPT:Me podrías ayudar a revisar si este código funciona bien, y que podría mejorar para que sea más eficiente
+     #código corregido por IA (Git Hub Copilot):
+     
     # Initialize the stack with the start state and empty path
     start_state = problem.getStartState()
     stack = [(start_state, [])]  # (state, path)
