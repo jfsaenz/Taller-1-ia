@@ -1,3 +1,4 @@
+import math
 from typing import Any, Tuple
 from algorithms import utils
 from algorithms.problems import MultiSurvivorProblem
@@ -18,6 +19,7 @@ def manhattanHeuristic(state, problem):
     For SimpleSurvivorProblem: calculates |dx| + |dy| between current position and goal
     For MultiSurvivorProblem: calculates distance to nearest remaining survivor
     """
+    # TODO: Add your code here
     x1, y1 = state
     x2, y2 = problem.goal
     
@@ -29,7 +31,11 @@ def euclideanHeuristic(state, problem):
     The Euclidean distance heuristic.
     """
     # TODO: Add your code here
-    utils.raiseNotDefined()
+    x1, y1 = state
+    
+    x2, y2 = problem.goal
+
+    return math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
 
 
 def survivorHeuristic(state: Tuple[Tuple, Any], problem: MultiSurvivorProblem):

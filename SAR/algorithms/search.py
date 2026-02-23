@@ -28,6 +28,7 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
+    # TODO: Add your code here
     start = problem.getStartState()
     # Si ya es el goal, devuelvo vacío.
     if problem.isGoalState(start):
