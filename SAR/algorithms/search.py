@@ -28,18 +28,10 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-<<<<<<< HEAD
-    # TODO: Add your code here
-    start = problem.getStartState()
-    # Si ya es el goal, devuelvo vacío.
-    if problem.isGoalState(start):
-        return []
-=======
     # Initialize the stack with the start state and empty path
     start_state = problem.getStartState()
     stack = [(start_state, [])]  # (state, path)
     visited = set([start_state])
->>>>>>> 1fc9437ab0a3faa0135a1a34e502170f90a4ff88
     
     while stack:
         current_state, path = stack.pop()
