@@ -28,16 +28,97 @@ def depthFirstSearch(problem: SearchProblem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
+<<<<<<< HEAD
     # TODO: Add your code here
-    utils.raiseNotDefined()
+    start = problem.getStartState()
+    # Si ya es el goal, devuelvo vacío.
+    if problem.isGoalState(start):
+        return []
+=======
+    # Initialize the stack with the start state and empty path
+    start_state = problem.getStartState()
+    stack = [(start_state, [])]  # (state, path)
+    visited = set([start_state])
+>>>>>>> 1fc9437ab0a3faa0135a1a34e502170f90a4ff88
+    
+    while stack:
+        current_state, path = stack.pop()
+        
+        if problem.isGoalState(current_state):
+            return path
+        
+        # Get successors
+        for successor, action, cost in problem.getSuccessors(current_state):
+            if successor not in visited:
+                visited.add(successor)
+                new_path = path + [action]
+                stack.append((successor, new_path))
+    
+    # If no solution found
+    return []
 
 
 def breadthFirstSearch(problem: SearchProblem):
     """
     Search the shallowest nodes in the search tree first.
     """
+    # Código Original Hecho a mano, sin IA:
+    """
+    frontier = utils.Queue()
+    start = problem.getStartState()
+
+    frontier.push((start, []))
+    visited = set([start])
+
+    while not frontier.isEmpty():
+        state, path = frontier.pop()
+
+        if problem.isGoalState(state):
+            return path
+
+        for succ, action, stepCost in problem.getSuccessors(state):
+            if succ not in visited:
+                visited.add(succ)
+                frontier.push((succ, path + [action]))
+
+    return []
+    """
+    #PROMPT: Revisa la carpeta que tiene todo el código, con eso, revisa el código que hice para BFS, 
+    #Corrigelo en caso de ser necesario para que cumpla con lo que me piden en el documento.
+    #El código que hice fue este: (Código Original Hecho a mano, sin IA)
+    
+    #Código corregido por IA (ChatGPT 5.2 versión Plus):
     # TODO: Add your code here
-    utils.raiseNotDefined()
+    start = problem.getStartState()
+    if problem.isGoalState(start):
+        return []
+
+    frontier = utils.Queue()
+    frontier.push(start)
+
+    visited = set([start])
+    parent = {}  
+
+    while not frontier.isEmpty():
+        state = frontier.pop()
+
+        if problem.isGoalState(state):
+            actions = []
+            cur = state
+            while cur != start:
+                prev, act = parent[cur]
+                actions.append(act)
+                cur = prev
+            actions.reverse()
+            return actions
+
+        for succ, action, stepCost in problem.getSuccessors(state):
+            if succ not in visited:
+                visited.add(succ)
+                parent[succ] = (state, action)
+                frontier.push(succ)
+
+    return []
 
 
 def uniformCostSearch(problem: SearchProblem):
